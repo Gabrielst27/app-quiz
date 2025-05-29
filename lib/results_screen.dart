@@ -4,9 +4,15 @@ import 'package:quiz_app/data/questions.dart';
 import 'package:quiz_app/questions_summary.dart';
 
 class ResultsScreen extends StatefulWidget {
-  const ResultsScreen({super.key, required this.answers});
+  const ResultsScreen({
+    super.key,
+    required this.answers,
+    required this.onRestart,
+  });
 
   final List<String> answers;
+
+  final void Function() onRestart;
 
   @override
   State<StatefulWidget> createState() {
@@ -27,6 +33,10 @@ class _ResultScreenState extends State<ResultsScreen> {
       });
     }
     return summary;
+  }
+
+  void restart() {
+    widget.onRestart();
   }
 
   @override
@@ -55,7 +65,9 @@ class _ResultScreenState extends State<ResultsScreen> {
             QuestionsSummary(summaryData: getSummaryData()),
             const SizedBox(height: 32),
             OutlinedButton.icon(
-              onPressed: () {},
+              onPressed: () {
+                restart();
+              },
               style: OutlinedButton.styleFrom(foregroundColor: Colors.white),
               icon: Icon(Icons.refresh_sharp),
               label: Text('Tentar novamente'),
